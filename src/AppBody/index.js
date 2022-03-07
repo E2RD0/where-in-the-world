@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import { Grid } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import "./AppBody.css";
 
 function AppBody() {
     const [data, setData] = React.useState([]);
@@ -20,16 +23,23 @@ function AppBody() {
 
     }, []);
 
-  return ( !!data.length &&
-    data.map((country, index) => {
+    const getElements = data.map((country, index) => {
         return (
-            <div key={index}>
-            <h1>{country.name.common}</h1>
-            <img src={country.flags.png} alt={country.name.common} />
-            </div>
+            <Grid key={index} item xs={3}>
+                <Link  to={`/countries/${country.cca2}`} className="country-link">
+                    <h1>{country.name.common}</h1>
+                    <img src={country.flags.png} alt={country.name.common} />
+                </Link>
+            </Grid>
         )
-    }
-  ) );
+    });
+
+  return ( !!data.length &&
+    
+    <Grid container spacing={3} xs={12}>
+        {getElements}
+    </Grid>
+    );
 }
 
 export { AppBody };
