@@ -9,7 +9,6 @@ import { Country } from './Country';
 
 ReactDOM.render(
   <BrowserRouter>
-  <React.StrictMode>
     <CssBaseline />
     <Routes>
     <Route path="/" element={<App />}>
@@ -25,7 +24,6 @@ ReactDOM.render(
       />
     </Route>
     </Routes>
-  </React.StrictMode>
   </BrowserRouter>,
   document.getElementById('root')
 );

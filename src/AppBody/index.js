@@ -3,24 +3,28 @@ import axios from 'axios';
 import { Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import "./AppBody.css";
+import { SearchBar } from '../SearchBar';
 
 function AppBody() {
     const [data, setData] = React.useState([]);
-    React.useEffect(() => {
-        axios.get('https://restcountries.com/v3.1/all')
-    .then(function (response) {
-        // handle success
-        setData(response.data);
-        console.log(response);
-    })
-    .catch(function (error) {
-        // handle error
-        console.log(error);
-    })
-    .then(function () {
-        // always executed
-    });
 
+    const getCountries = (filter) => {
+        axios.get(`https://restcountries.com/v3.1/${filter}`)
+        .then(function (response) {
+            // handle success
+            setData(response.data);
+            console.log(response);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
+    }
+    React.useEffect(() => {
+        getCountries("all");
     }, []);
 
     const getElements = data.map((country, index) => {
@@ -35,10 +39,12 @@ function AppBody() {
     });
 
   return ( !!data.length &&
-    
-    <Grid container spacing={3} xs={12}>
-        {getElements}
-    </Grid>
+    <>
+        <SearchBar getCountries={getCountries}/>
+        <Grid container spacing={3} xs={12}>
+            {getElements}
+        </Grid>
+    </>
     );
 }
 
